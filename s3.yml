@@ -1,0 +1,55 @@
+Description: Deploy S3 bucket for website
+
+Parameters: 
+  owner:
+    Type: String
+  ownerEmail:
+    Type: String
+  enrironment:
+    Type: String
+    Default: development
+    AllowedValues:
+      - development
+      - production
+      - test
+Resources:
+  oai:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'OAI User'
+
+  bucket: 
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: 'www.leonardobozcaitano.com'
+      WebsiteConfiguration:
+        Index: index.html
+      Tags:
+        - Key: owner
+          Value: !Ref owner
+        - Key: ownerEmail
+          Value: !Ref ownerEmail
+        - Key: enrironment
+          Value: !Ref enrironment
+
+  policy: 
+    Type: AWS::S3::BucketPolicy
+    DependsOn: 
+      - bucket
+      - oai
+    Properties:
+      Bucket: !Ref bucket
+      PolicyDocument: 
+        Version: 2021-02-14
+        Statement:
+          - Effect: Allow
+            Action:
+              - 's3:GetObject'
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${oai}'
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref bucket, '/']]
+
+            

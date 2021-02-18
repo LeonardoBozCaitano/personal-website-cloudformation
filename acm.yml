@@ -1,0 +1,33 @@
+Description: Deploy ACM for leonardoboz.com
+
+Parameters: 
+  r53ZoneId:
+    Type: String
+  owner:
+    Type: String
+  ownerEmail:
+    Type: String
+  enrironment:
+    Type: String
+    Default: development
+    AllowedValues:
+      - development
+      - production
+      - test
+
+Resources: 
+  cert0:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: '*.leonardoboz.com'
+      DomainValidationOptions:
+        - DomainName: 'leonardoboz.com'
+          HostedZoneId: !Ref r53ZoneId
+      ValidationMethod: Description
+      Tags:
+        - Key: owner
+          Value: !Ref owner
+        - Key: ownerEmail
+          Value: !Ref ownerEmail
+        - Key: enrironment
+          Value: !Ref enrironment
