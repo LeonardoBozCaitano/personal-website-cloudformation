@@ -19,15 +19,14 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Deploy ACM Cloudformation Template
-      run: |
-        aws cloudformation deploy 
-        --template-file acm.yml 
-        --stack-name personal-website-stack 
+      run: aws cloudformation deploy |
+        --template-file ./acm.yml |
+        --stack-name personal-website-stack |
         --parameter-overrides r53ZoneId=${{ secrets.AWS_R53_HOSTED_ZONE_ID }} owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} enrironment=production
               
     - name: Deploy S3 Cloudformation Template
       run: |
-        aws cloudformation deploy 
-        --template-file s3.yml 
-        --stack-name personal-website-stack
+        aws cloudformation deploy |
+        --template-file ./s3.yml |
+        --stack-name personal-website-stack |
         --parameter-overrides owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} enrironment=production
