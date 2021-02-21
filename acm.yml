@@ -19,9 +19,9 @@ Resources:
   cert0:
     Type: AWS::CertificateManager::Certificate
     Properties:
-      DomainName: '*.leonardoboz.com'
+      DomainName: leonardoboz.com
       DomainValidationOptions:
-        - DomainName: 'leonardoboz.com'
+        - DomainName: '*.leonardoboz.com'
           HostedZoneId: !Ref r53ZoneId
       ValidationMethod: Description
       Tags:
