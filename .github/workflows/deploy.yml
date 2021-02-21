@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy website
+  deployAcm:
+    name: Deploy Acm
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -32,6 +32,20 @@ jobs:
       run: >
         aws cloudformation update-termination-protection --stack-name personal-website-acm
         --enable-termination-protection
+        
+  deployS3:
+    name: Deploy S3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Deploy S3 Cloudformation Template
       run: >
