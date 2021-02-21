@@ -21,8 +21,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Validate ACM Cloudformation Template
+    - name: Validate ACM Template
       run: aws cloudformation validate-template --template-body file://acm.yml
 
-    - name: Validate S3 Cloudformation Template
+    - name: Validate S3 Template
       run: aws cloudformation validate-template --template-body file://s3.yml
+
+    - name: Validate CloudFront Template
+      run: aws cloudformation validate-template --template-body file://cloudfront.yml

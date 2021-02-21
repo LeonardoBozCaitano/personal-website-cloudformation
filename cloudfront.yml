@@ -1,0 +1,49 @@
+Description: Deploy the Cloudfront for s3 static website
+
+Parameters: 
+  s3Stack: 
+    Type: String
+    Default: personal-website-s3
+  acmStack: 
+    Type: String
+    Default: personal-website-acm
+  owner:
+    Type: String
+  ownerEmail:
+    Type: String
+  enrironment:
+    Type: String
+    Default: development
+    AllowedValues:
+      - development
+      - production
+      - test
+      
+Resources:
+  cloudfrontDistribuition: 
+    Type: AWS::CloudFront::Distribuition
+    Properties:
+      DistribuitionConfig:
+        Comment: Personal website Distribuition
+        DefaultCacheBehavior: 
+          Compress: true
+          ForwardValues:
+            QueryString: false
+          TargetOriginId: PersonalWebsiteOrigin
+          ViwerProtocolPolicy: redirect-to-https 
+    Enabled: true
+    Origins: 
+      - DomainName: {'FN::ImportValue': !Sub '${s3Stack}-domain'}
+        Id: PersonalWebsiteOrigin
+        S3OriginConfig: 
+          OriginAccessIdentity: !Join ['', ['origin-access-identity/cloudfront/', {'Fn::ImportValue': !Sub '${s3Stack}-oai'}]]
+    PriceClass: PriceClass.All
+    ViewerCertificates:
+      AcmCertificateArn: {'FN::ImportValue': !Sub '${acmStack}-arn'}  
+    Tags:
+      - Key: owner
+        Value: !Ref owner
+      - Key: ownerEmail
+        Value: !Ref ownerEmail
+      - Key: enrironment
+        Value: !Ref enrironment

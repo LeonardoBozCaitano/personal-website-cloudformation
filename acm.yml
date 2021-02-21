@@ -31,3 +31,9 @@ Resources:
           Value: !Ref ownerEmail
         - Key: enrironment
           Value: !Ref enrironment
+
+Outputs:
+  cert0:
+    Value: !Ref cert0
+    Export:
+      Name: !Sub '${AWS::StackName}-arn'

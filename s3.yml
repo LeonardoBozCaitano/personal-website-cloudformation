@@ -53,4 +53,14 @@ Resources:
                 - !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${oai}'
             Resource: !Join ['', ['arn:aws:s3:::', !Ref bucket, '/']]
 
+Outputs: 
+  domain:
+    Value: !GetAtt bucket.DomainName
+    Export: 
+      Name: !Sub '${AWS::StackName}-domain'
+  oai:
+    Value: !GetAtt oai.DomainName
+    Export: 
+      Name: !Sub '${AWS::StackName}-oai'
+
             
