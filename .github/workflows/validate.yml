@@ -22,9 +22,7 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Validate ACM Cloudformation Template
-      run: |
-        aws cloudformation validate-template --template-body file://acm.yml
+      run: aws cloudformation validate-template --template-body file://acm.yml
 
     - name: Validate S3 Cloudformation Template
-      run: |
-        aws cloudformation validate-template --template-body file://s3.yml
+      run: aws cloudformation validate-template --template-body file://s3.yml

@@ -19,11 +19,11 @@ Resources:
   cert0:
     Type: AWS::CertificateManager::Certificate
     Properties:
-      DomainName: '*.leonardobozcaitano.com'
+      DomainName: leonardobozcaitano.com
       DomainValidationOptions:
-        - DomainName: 'leonardobozcaitano.com'
+        - DomainName: www.leonardobozcaitano.com
           HostedZoneId: !Ref r53ZoneId
-      ValidationMethod: Description
+      ValidationMethod: DNS
       Tags:
         - Key: owner
           Value: !Ref owner

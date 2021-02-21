@@ -1,4 +1,4 @@
-Description: Deploy S3 bucket for website
+Description: Deploy S3 bucket for static website
 
 Parameters: 
   owner:
@@ -12,6 +12,7 @@ Parameters:
       - development
       - production
       - test
+      
 Resources:
   oai:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
@@ -23,7 +24,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: 'www.leonardobozcaitano.com'
+      BucketName: 'leonardobozcaitano.com'
       WebsiteConfiguration:
         Index: index.html
       Tags:
