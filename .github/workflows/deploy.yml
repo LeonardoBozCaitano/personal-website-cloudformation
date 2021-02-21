@@ -19,7 +19,37 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Deploy ACM Cloudformation Template
-      run: aws cloudformation deploy --template-file ./acm.yml --stack-name personal-website-stack --parameter-overrides r53ZoneId=${{ secrets.AWS_R53_HOSTED_ZONE_ID }} owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} enrironment=production --debug
-              
+      run: >
+        aws cloudformation deploy --template-file ./acm.yml --stack-name personal-website-acm
+        --no-execute-changeset --no-fail-on-empty-changeset
+        --tags 
+          owner=${{ secrets.AWS_CERTIFICATE_OWNER }} 
+          ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} 
+          enrironment=production
+        --parameter-overrides 
+          r53ZoneId=${{ secrets.AWS_R53_HOSTED_ZONE_ID }} 
+          owner=${{ secrets.AWS_CERTIFICATE_OWNER }} 
+          ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} 
+          enrironment=production --debug
+         
+    - name: Wait Cloudformation Exists
+      run: aws cloudformation wait stack-exists --stack-name personal-website-acm
+      
+    - name: Update Termination protection from cloudformation template
+      run: >
+        aws cloudformation update-termination-protection --stack-name personal-website-acm
+        --enable-termination-protection
+
     - name: Deploy S3 Cloudformation Template
-      run: aws cloudformation deploy --template-file ./s3.yml --stack-name personal-website-stack --parameter-overrides owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} enrironment=production --debug
+      run: >
+        aws cloudformation deploy --template-file ./s3.yml --stack-name personal-website-s3 
+        --no-execute-changeset --no-fail-on-empty-changeset
+        --tags 
+        owner=${{ secrets.AWS_CERTIFICATE_OWNER }} 
+        ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} 
+        enrironment=production
+        --parameter-overrides 
+        r53ZoneId=${{ secrets.AWS_R53_HOSTED_ZONE_ID }} 
+        owner=${{ secrets.AWS_CERTIFICATE_OWNER }} 
+        ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} 
+        enrironment=production --debug

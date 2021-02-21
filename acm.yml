@@ -1,4 +1,4 @@
-Description: Deploy ACM for leonardoboz.com
+Description: Deploy ACM for my domain
 
 Parameters: 
   r53ZoneId:
