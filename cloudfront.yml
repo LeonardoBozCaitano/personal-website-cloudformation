@@ -21,7 +21,7 @@ Parameters:
       
 Resources:
   cloudfrontDistribuition: 
-    Type: AWS::CloudFront::Distribuition
+    Type: AWS::CloudFront::Distribution
     Properties:
       DistribuitionConfig:
         Comment: Personal website Distribuition
@@ -33,19 +33,19 @@ Resources:
           ViwerProtocolPolicy: redirect-to-https 
       Enabled: true
       Origins: 
-        - DomainName: {'FN::ImportValue': !Sub '${s3Stack}-domain'}
+        - DomainName: {'Fn::ImportValue': !Sub '${s3Stack}-domain'}
           Id: PersonalWebsiteOrigin
           S3OriginConfig: 
             OriginAccessIdentity: !Join ['', ['origin-access-identity/cloudfront/', {'Fn::ImportValue': !Sub '${s3Stack}-oai'}]]
-        PriceClass: PriceClass.All
+          PriceClass: PriceClass.All
       ViewerCertificates:
-        AcmCertificateArn: {'FN::ImportValue': !Sub '${acmStack}-arn'}
+        AcmCertificateArn: {'Fn::ImportValue': !Sub '${acmStack}-arn'}
         MinimumProtocolVersion: TLSv1.2.2018
         SslSupportMethod: sni-only  
-    Tags:
-      - Key: owner
-        Value: !Ref owner
-      - Key: ownerEmail
-        Value: !Ref ownerEmail
-      - Key: environment
-        Value: !Ref environment
+      Tags:
+        - Key: owner
+          Value: !Ref owner
+        - Key: ownerEmail
+          Value: !Ref ownerEmail
+        - Key: environment
+          Value: !Ref environment
