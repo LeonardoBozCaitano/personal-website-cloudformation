@@ -43,7 +43,7 @@ Resources:
     Properties:
       Bucket: !Ref bucket
       PolicyDocument: 
-        Version: 2021-02-14
+        Version: 2012-10-17
         Statement:
           - Effect: Allow
             Action:
