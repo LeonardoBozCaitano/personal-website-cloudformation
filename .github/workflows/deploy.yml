@@ -63,7 +63,7 @@ jobs:
         aws cloudformation update-termination-protection --stack-name personal-website-s3
         --enable-termination-protection
 
-  deployS3:
+  deployCloudFront:
     name: Deploy CloudFront Distribuition
     needs: deployS3
     runs-on: ubuntu-latest
