@@ -23,8 +23,8 @@ Resources:
   cloudfrontDistribuition: 
     Type: AWS::CloudFront::Distribution
     Properties:
-      DistribuitionConfig:
-        Comment: Personal website Distribuition
+      DistributionConfig:
+        Comment: Personal website Distribution
         DefaultCacheBehavior: 
           Compress: true
           ForwardValues:
