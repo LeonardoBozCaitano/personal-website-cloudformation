@@ -37,10 +37,10 @@ Resources:
             Id: PersonalWebsiteOrigin
             S3OriginConfig: 
               OriginAccessIdentity: !Join ['', ['origin-access-identity/cloudfront/', {'Fn::ImportValue': !Sub '${s3Stack}-oai'}]]
-        PriceClass: PriceClass.All
+        PriceClass: PriceClass_All
         ViewerCertificate:
           AcmCertificateArn: {'Fn::ImportValue': !Sub '${acmStack}-arn'}
-          MinimumProtocolVersion: TLSv1.2.2018
+          MinimumProtocolVersion: TLSv1.2_2018
           SslSupportMethod: sni-only  
       Tags:
         - Key: owner
