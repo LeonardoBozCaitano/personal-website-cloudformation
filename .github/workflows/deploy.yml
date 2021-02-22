@@ -21,6 +21,7 @@ jobs:
     - name: Deploy ACM Cloudformation Template
       run: >
         aws cloudformation deploy --template-file ./acm.yml --stack-name personal-website-acm
+        --no-execute-changeset --no-fail-on-empty-changeset
         --tags owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} environment=production
         --parameter-overrides r53ZoneId=${{ secrets.AWS_R53_HOSTED_ZONE_ID }} owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} environment=production
          
@@ -50,6 +51,7 @@ jobs:
     - name: Deploy S3 Cloudformation Template
       run: >
         aws cloudformation deploy --template-file ./s3.yml --stack-name personal-website-s3 
+        --no-execute-changeset --no-fail-on-empty-changeset
         --tags owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} environment=production
         --parameter-overrides owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} environment=production
                  
@@ -79,6 +81,7 @@ jobs:
     - name: Deploy CloudFront
       run: >
         aws cloudformation deploy --template-file ./cloudfront.yml --stack-name personal-website-cloudfront 
+        --no-execute-changeset --no-fail-on-empty-changeset
         --tags owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} environment=production
         --parameter-overrides owner=${{ secrets.AWS_CERTIFICATE_OWNER }} ownerEmail=${{ secrets.AWS_CERTIFICATE_OWNER_EMAIL }} environment=production
                  
