@@ -59,7 +59,7 @@ Outputs:
     Export: 
       Name: !Sub '${AWS::StackName}-domain'
   oai:
-    Value: !GetAtt oai.DomainName
+    Value: !Ref oai
     Export: 
       Name: !Sub '${AWS::StackName}-oai'
 
