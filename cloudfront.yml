@@ -11,7 +11,7 @@ Parameters:
     Type: String
   ownerEmail:
     Type: String
-  enrironment:
+  environment:
     Type: String
     Default: development
     AllowedValues:
@@ -47,5 +47,5 @@ Resources:
         Value: !Ref owner
       - Key: ownerEmail
         Value: !Ref ownerEmail
-      - Key: enrironment
-        Value: !Ref enrironment
+      - Key: environment
+        Value: !Ref environment
