@@ -1,6 +1,6 @@
 # My Personal Website infrastructure as code.
 
-Building the infrastructure to my static website hosted in [myWebsite](http://www.leonardobozcaitano.com)
+Building the infrastructure to my static website hosted in my Website hosted in http://www.leonardobozcaitano.com
 
 ### The infrastructure will be build in 6 steps:
 
